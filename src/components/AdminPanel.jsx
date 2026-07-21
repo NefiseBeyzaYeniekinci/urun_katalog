@@ -11,6 +11,7 @@ export default function AdminPanel({
   onClose,
   products,
   onAddProduct,
+  onUpdateProduct,
   onDeleteProduct,
   storeConfig,
   onUpdateStoreConfig,
@@ -21,6 +22,9 @@ export default function AdminPanel({
   const [activeTab, setActiveTab] = useState('list'); // 'list' | 'add' | 'categories' | 'settings'
   const [productSearch, setProductSearch] = useState('');
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState('Tümü');
+
+  // Edit State
+  const [editingProduct, setEditingProduct] = useState(null);
 
   // Product Form State
   const [title, setTitle] = useState('');
@@ -103,7 +107,36 @@ export default function AdminPanel({
     });
   }, [products, productSearch, selectedCategoryFilter]);
 
-  // Handle Adding Product
+  // Start Editing Product
+  const handleStartEdit = (prod) => {
+    setEditingProduct(prod);
+    setTitle(prod.title || '');
+    setBrand(prod.brand || 'elisi_sevdasi');
+    setCategory(prod.category || categories[1] || 'Hırka & Ceketler');
+    setGender(prod.gender || 'Unisex');
+    setPrice(prod.price ? String(prod.price) : '');
+    setOldPrice(prod.oldPrice ? String(prod.oldPrice) : '');
+    setBadgeText(prod.badgeText || '');
+    const img = Array.isArray(prod.images) ? prod.images[0] : (prod.image || '');
+    setImageUrl(img);
+    setDescription(prod.description || '');
+    setColorsText(Array.isArray(prod.colors) ? prod.colors.join(', ') : '');
+    setSizesText(Array.isArray(prod.sizes) ? prod.sizes.join(', ') : '');
+    setDimensions(prod.dimensions || '');
+    setActiveTab('add');
+  };
+
+  const handleCancelEdit = () => {
+    setEditingProduct(null);
+    setTitle('');
+    setPrice('');
+    setOldPrice('');
+    setImageUrl('');
+    setDescription('');
+    setBadgeText('El Emeği');
+  };
+
+  // Handle Adding or Updating Product
   const handleProductSubmit = (e) => {
     e.preventDefault();
     if (!title || !price || !imageUrl) return;
@@ -112,30 +145,54 @@ export default function AdminPanel({
     const parsedOldPrice = oldPrice ? parseFloat(oldPrice) : null;
     const discount = parsedOldPrice ? Math.round(((parsedOldPrice - parsedPrice) / parsedOldPrice) * 100) : null;
 
-    const newProd = {
-      id: `item-${Date.now()}`,
-      title,
-      brand: brand || 'elisi_sevdasi',
-      category,
-      gender,
-      price: parsedPrice,
-      oldPrice: parsedOldPrice,
-      discountPercent: discount,
-      rating: 5.0,
-      reviewCount: 1,
-      isNew: true,
-      isBestSeller: false,
-      inStock: true,
-      badgeText: badgeText || null,
-      colors: colorsText.split(',').map(s => s.trim()).filter(Boolean),
-      sizes: sizesText.split(',').map(s => s.trim()).filter(Boolean),
-      dimensions: dimensions || 'Standart Ölçü',
-      description: description || 'Özel el örgüsü üründür. Detaylar için Instagram DM üzerinden iletişime geçebilirsiniz.',
-      images: [imageUrl],
-      features: ['Özel El Örgüsü', 'Gaziantep Atölye Üretimi', 'DM Sipariş']
-    };
+    if (editingProduct) {
+      // Update existing product
+      const updatedProd = {
+        ...editingProduct,
+        title,
+        brand: brand || 'elisi_sevdasi',
+        category,
+        gender,
+        price: parsedPrice,
+        oldPrice: parsedOldPrice,
+        discountPercent: discount,
+        badgeText: badgeText || null,
+        colors: colorsText.split(',').map(s => s.trim()).filter(Boolean),
+        sizes: sizesText.split(',').map(s => s.trim()).filter(Boolean),
+        dimensions: dimensions || 'Standart Ölçü',
+        description: description || 'Özel el örgüsü üründür. Detaylar için Instagram DM üzerinden iletişime geçebilirsiniz.',
+        images: [imageUrl]
+      };
 
-    onAddProduct(newProd);
+      if (onUpdateProduct) onUpdateProduct(updatedProd);
+      setEditingProduct(null);
+    } else {
+      // Create new product
+      const newProd = {
+        id: `item-${Date.now()}`,
+        title,
+        brand: brand || 'elisi_sevdasi',
+        category,
+        gender,
+        price: parsedPrice,
+        oldPrice: parsedOldPrice,
+        discountPercent: discount,
+        rating: 5.0,
+        reviewCount: 1,
+        isNew: true,
+        isBestSeller: false,
+        inStock: true,
+        badgeText: badgeText || null,
+        colors: colorsText.split(',').map(s => s.trim()).filter(Boolean),
+        sizes: sizesText.split(',').map(s => s.trim()).filter(Boolean),
+        dimensions: dimensions || 'Standart Ölçü',
+        description: description || 'Özel el örgüsü üründür. Detaylar için Instagram DM üzerinden iletişime geçebilirsiniz.',
+        images: [imageUrl],
+        features: ['Özel El Örgüsü', 'Gaziantep Atölye Üretimi', 'DM Sipariş']
+      };
+
+      onAddProduct(newProd);
+    }
 
     // Reset Form
     setTitle('');
@@ -418,14 +475,25 @@ export default function AdminPanel({
                         </div>
                       </div>
 
-                      <button
-                        onClick={() => onDeleteProduct(p.id)}
-                        className="p-2.5 text-[#C05663] bg-[#FFFFFF] hover:bg-[#FDF2F4] rounded-2xl border border-[#EFE8E1] hover:border-[#F6D6DA] transition-colors flex items-center gap-1 text-xs font-bold shrink-0"
-                        title="Ürünü Sil"
-                      >
-                        <Trash2 size={16} />
-                        <span className="hidden sm:inline">Sil</span>
-                      </button>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <button
+                          onClick={() => handleStartEdit(p)}
+                          className="p-2.5 text-[#2D2926] bg-[#FFFFFF] hover:bg-[#F6F0EA] rounded-2xl border border-[#EFE8E1] transition-colors flex items-center gap-1 text-xs font-bold"
+                          title="Ürünü Düzenle"
+                        >
+                          <Edit3 size={15} className="text-[#C05663]" />
+                          <span className="hidden sm:inline">Düzenle</span>
+                        </button>
+
+                        <button
+                          onClick={() => onDeleteProduct(p.id)}
+                          className="p-2.5 text-[#C05663] bg-[#FFFFFF] hover:bg-[#FDF2F4] rounded-2xl border border-[#EFE8E1] hover:border-[#F6D6DA] transition-colors flex items-center gap-1 text-xs font-bold"
+                          title="Ürünü Sil"
+                        >
+                          <Trash2 size={16} />
+                          <span className="hidden sm:inline">Sil</span>
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -434,13 +502,28 @@ export default function AdminPanel({
             </div>
           )}
 
-          {/* TAB 2: ADD PRODUCT VIEW */}
+          {/* TAB 2: ADD / EDIT PRODUCT VIEW */}
           {activeTab === 'add' && (
             <div className="bg-[#FFFFFF] p-6 rounded-3xl border border-[#EFE8E1] shadow-xs space-y-6">
               
-              <div className="pb-4 border-b border-[#EFE8E1]">
-                <h2 className="text-lg font-bold text-[#2D2926]">Yeni Ürün Ekle</h2>
-                <p className="text-xs text-[#736C65]">Vitrininizde ve Supabase veritabanınızda yayınlanacak yeni bir el emeği ürün oluşturun</p>
+              <div className="pb-4 border-b border-[#EFE8E1] flex items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-lg font-bold text-[#2D2926]">
+                    {editingProduct ? '✏️ Ürün Bilgilerini Düzenle' : 'Yeni Ürün Ekle'}
+                  </h2>
+                  <p className="text-xs text-[#736C65]">
+                    {editingProduct ? 'Mevcut ürün fiyatı, görseli, renk ve ölçü detaylarını güncelleyin' : 'Vitrininizde ve veritabanınızda yayınlanacak yeni bir el emeği ürün oluşturun'}
+                  </p>
+                </div>
+
+                {editingProduct && (
+                  <button
+                    onClick={handleCancelEdit}
+                    className="btn text-xs py-2 px-3 bg-[#F6F0EA] text-[#2D2926] font-bold rounded-2xl hover:bg-[#EDE4DA]"
+                  >
+                    İptal Et
+                  </button>
+                )}
               </div>
 
               {formSuccess && (
@@ -705,7 +788,7 @@ export default function AdminPanel({
                   type="submit"
                   className="btn btn-primary w-full py-4 text-xs font-bold bg-[#C05663] hover:bg-[#a84753] text-white rounded-2xl shadow-md"
                 >
-                  + Ürünü Yayınla ve Kaydet
+                  {editingProduct ? '💾 Değişiklikleri Güncelle ve Kaydet' : '+ Ürünü Yayınla ve Kaydet'}
                 </button>
 
               </form>

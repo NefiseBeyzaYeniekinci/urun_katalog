@@ -180,7 +180,7 @@ export default function App() {
     );
   };
 
-  // Add / Delete Product (Admin)
+  // Add / Update / Delete Product (Admin)
   const handleAddProduct = async (newProduct) => {
     setProducts((prev) => [newProduct, ...prev]);
 
@@ -189,6 +189,23 @@ export default function App() {
         await supabase.from('products').insert([newProduct]);
       } catch (e) {
         console.error("Supabase ürün ekleme hatası:", e);
+      }
+    }
+  };
+
+  const handleUpdateProduct = async (updatedProduct) => {
+    setProducts((prev) =>
+      prev.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
+    );
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase
+          .from('products')
+          .update(updatedProduct)
+          .eq('id', updatedProduct.id);
+      } catch (e) {
+        console.error("Supabase ürün güncelleme hatası:", e);
       }
     }
   };
@@ -259,6 +276,7 @@ export default function App() {
         onClose={() => setIsAdminOpen(false)}
         products={products}
         onAddProduct={handleAddProduct}
+        onUpdateProduct={handleUpdateProduct}
         onDeleteProduct={handleDeleteProduct}
         storeConfig={storeConfig}
         onUpdateStoreConfig={setStoreConfig}
