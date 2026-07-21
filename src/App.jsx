@@ -64,6 +64,55 @@ export default function App() {
     return [];
   });
 
+  // Supabase Schema Mapping Helpers
+  const formatProductForSupabase = (prod) => {
+    const mainImage = Array.isArray(prod.images) && prod.images.length > 0
+      ? prod.images[0]
+      : (prod.image || '');
+
+    return {
+      id: String(prod.id),
+      title: prod.title || '',
+      price: Number(prod.price) || 0,
+      oldprice: prod.oldPrice ? Number(prod.oldPrice) : null,
+      category: prod.category || 'Tümü',
+      gender: prod.gender || 'Unisex',
+      image: mainImage,
+      description: prod.description || '',
+      colors: Array.isArray(prod.colors) ? prod.colors : [],
+      sizes: Array.isArray(prod.sizes) ? prod.sizes : [],
+      isnew: prod.isNew ?? true,
+      badge: prod.badgeText || prod.badge || null,
+      discountpercent: prod.discountPercent ? Number(prod.discountPercent) : null
+    };
+  };
+
+  const mapSupabaseToProduct = (dbRow) => {
+    const mainImg = dbRow.image || (Array.isArray(dbRow.images) ? dbRow.images[0] : '');
+    return {
+      id: String(dbRow.id),
+      title: dbRow.title || '',
+      brand: dbRow.brand || 'elisi_sevdasi',
+      category: dbRow.category || 'Tümü',
+      gender: dbRow.gender || 'Unisex',
+      price: Number(dbRow.price) || 0,
+      oldPrice: dbRow.oldprice ? Number(dbRow.oldprice) : (dbRow.oldPrice ? Number(dbRow.oldPrice) : null),
+      discountPercent: dbRow.discountpercent || dbRow.discountPercent || null,
+      rating: dbRow.rating || 5.0,
+      reviewCount: dbRow.reviewcount || 42,
+      isNew: dbRow.isnew ?? dbRow.isNew ?? true,
+      isBestSeller: dbRow.isbestseller ?? dbRow.isBestSeller ?? false,
+      inStock: dbRow.instock ?? dbRow.inStock ?? true,
+      badgeText: dbRow.badge || dbRow.badgetext || dbRow.badgeText || null,
+      colors: Array.isArray(dbRow.colors) ? dbRow.colors : [],
+      sizes: Array.isArray(dbRow.sizes) ? dbRow.sizes : [],
+      dimensions: dbRow.dimensions || 'Standart Ölçü',
+      description: dbRow.description || '',
+      images: mainImg ? [mainImg] : ['https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=800&q=80'],
+      features: Array.isArray(dbRow.features) ? dbRow.features : ['Özel El Örgüsü', 'Gaziantep Atölye Üretimi', 'DM Sipariş']
+    };
+  };
+
   // Supabase Data Fetching
   useEffect(() => {
     if (!isSupabaseConfigured || !supabase) return;
@@ -71,8 +120,9 @@ export default function App() {
     async function loadSupabaseData() {
       try {
         const { data: dbProducts, error: prodErr } = await supabase.from('products').select('*');
-        if (!prodErr && dbProducts) {
-          setProducts(dbProducts);
+        if (!prodErr && dbProducts && dbProducts.length > 0) {
+          const formatted = dbProducts.map(mapSupabaseToProduct);
+          setProducts(formatted);
         }
 
         const { data: dbCats, error: catErr } = await supabase.from('categories').select('name');
@@ -186,7 +236,11 @@ export default function App() {
 
     if (isSupabaseConfigured && supabase) {
       try {
-        await supabase.from('products').insert([newProduct]);
+        const payload = formatProductForSupabase(newProduct);
+        const { error } = await supabase.from('products').insert([payload]);
+        if (error) {
+          console.error("Supabase ürün ekleme hatası:", error);
+        }
       } catch (e) {
         console.error("Supabase ürün ekleme hatası:", e);
       }
@@ -200,10 +254,14 @@ export default function App() {
 
     if (isSupabaseConfigured && supabase) {
       try {
-        await supabase
+        const payload = formatProductForSupabase(updatedProduct);
+        const { error } = await supabase
           .from('products')
-          .update(updatedProduct)
+          .update(payload)
           .eq('id', updatedProduct.id);
+        if (error) {
+          console.error("Supabase ürün güncelleme hatası:", error);
+        }
       } catch (e) {
         console.error("Supabase ürün güncelleme hatası:", e);
       }

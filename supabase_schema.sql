@@ -45,4 +45,5 @@ CREATE POLICY "Public Admins Select" ON public.admins FOR SELECT USING (true);
 
 -- Public Access Policies for Product Mutation (Development)
 CREATE POLICY "Public Products Insert" ON public.products FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Products Update" ON public.products FOR UPDATE USING (true);
 CREATE POLICY "Public Products Delete" ON public.products FOR DELETE USING (true);
