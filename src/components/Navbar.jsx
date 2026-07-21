@@ -159,24 +159,21 @@ export default function Navbar({
       </div>
 
       {/* 3. Main Category Navigation Bar */}
-      <div className="bg-[#FAF6F0] border-t border-[#EFE8E1]">
-        <div className="container flex items-center overflow-x-auto scrollbar-none gap-1 py-1">
+      <div className="bg-[#FAF6F0] border-t border-[#EFE8E1] py-2.5 px-2">
+        <div className="container flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
           {(categories || CATEGORIES).map((cat) => {
             const isActive = activeCategory === cat;
             return (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`whitespace-nowrap px-4 py-2 text-xs font-bold transition-all relative ${
+                className={`px-3.5 py-1.5 text-xs font-bold transition-all rounded-xl border ${
                   isActive
-                    ? 'text-[#C05663] bg-[#FFFFFF] rounded-xl shadow-xs'
-                    : 'text-[#5A5450] hover:text-[#2D2926] hover:bg-[#FFFFFF]/60 rounded-xl'
+                    ? 'text-white bg-[#C05663] border-[#C05663] shadow-xs scale-105'
+                    : 'text-[#5A5450] bg-[#FFFFFF] hover:text-[#2D2926] hover:bg-[#F5EAE6] border-[#EFE8E1]'
                 }`}
               >
                 {cat}
-                {isActive && (
-                  <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#C05663] rounded-full" />
-                )}
               </button>
             );
           })}
