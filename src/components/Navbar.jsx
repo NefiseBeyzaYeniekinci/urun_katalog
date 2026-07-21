@@ -35,9 +35,9 @@ export default function Navbar({
             </span>
           </div>
 
-          <div className="hidden md:flex items-center gap-4 text-[11px] text-[#D4C4B7]">
-            <span>Müşteri Yanıt Süresi: {config.responseTime}</span>
-            <span>|</span>
+          <div className="flex items-center gap-3 text-[11px] text-[#D4C4B7]">
+            <span className="hidden md:inline">Müşteri Yanıt Süresi: {config.responseTime}</span>
+            <span className="hidden md:inline">|</span>
             <a
               href={`https://instagram.com/${config.username}`}
               target="_blank"
@@ -46,6 +46,15 @@ export default function Navbar({
             >
               <InstagramIcon size={13} /> @{config.username}
             </a>
+            {!isAdminLoggedIn && (
+              <button
+                onClick={onOpenAdminAuth}
+                className="opacity-30 hover:opacity-100 transition-opacity p-1 text-[#FAF6F0] ml-1"
+                title="Yönetici Girişi"
+              >
+                <Lock size={13} />
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -93,7 +102,7 @@ export default function Navbar({
         {/* Right Actions */}
         <div className="flex items-center gap-2 sm:gap-3">
           
-          {/* Admin Toggle / Login Button */}
+          {/* Admin Panel Link (Only shown when logged in or small subtle lock icon) */}
           {isAdminLoggedIn ? (
             <div className="flex items-center gap-1.5 bg-[#F5EAE6] p-1 pr-3 rounded-full border border-[#F6D6DA]">
               <button
@@ -113,11 +122,10 @@ export default function Navbar({
           ) : (
             <button
               onClick={onOpenAdminAuth}
-              className="btn btn-outline text-xs py-2 px-3 sm:px-3.5 bg-[#FFFFFF] hover:bg-[#F6F0EA] border-[#EFE8E1] text-[#736C65]"
+              className="p-2.5 rounded-2xl bg-[#F9F6F3] border border-[#EFE8E1] text-[#9E938B] hover:text-[#2D2926] hover:bg-[#F6F0EA] transition-colors md:hidden"
               title="Yönetici Girişi"
             >
-              <Lock size={15} className="text-[#9E938B]" />
-              <span className="hidden sm:inline font-medium text-[11px]">Yönetici Girişi</span>
+              <Lock size={17} />
             </button>
           )}
 

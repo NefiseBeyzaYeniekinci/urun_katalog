@@ -122,7 +122,10 @@ export default function App() {
   // Admin Session State
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
     try {
-      return localStorage.getItem('elisi_admin_session') === 'true';
+      return (
+        localStorage.getItem('elisi_admin_session') === 'true' ||
+        sessionStorage.getItem('elisi_admin_session') === 'true'
+      );
     } catch (e) {
       return false;
     }
@@ -150,10 +153,14 @@ export default function App() {
     }
   };
 
-  const handleAdminLoginSuccess = () => {
+  const handleAdminLoginSuccess = (remember = true) => {
     setIsAdminLoggedIn(true);
     try {
-      localStorage.setItem('elisi_admin_session', 'true');
+      if (remember) {
+        localStorage.setItem('elisi_admin_session', 'true');
+      } else {
+        sessionStorage.setItem('elisi_admin_session', 'true');
+      }
     } catch (e) {}
     setIsAdminAuthOpen(false);
     setIsAdminOpen(true);
@@ -163,6 +170,7 @@ export default function App() {
     setIsAdminLoggedIn(false);
     try {
       localStorage.removeItem('elisi_admin_session');
+      sessionStorage.removeItem('elisi_admin_session');
     } catch (e) {}
     setIsAdminOpen(false);
   };

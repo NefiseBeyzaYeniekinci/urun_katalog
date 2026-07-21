@@ -184,9 +184,6 @@ export default function AdminPanel({
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-base font-extrabold text-[#2D2926]">Yönetim Kontrol Paneli</h1>
-                <span className="bg-[#2D2926] text-[#FAF6F0] text-[10px] font-bold px-2 py-0.5 rounded-full">
-                  Admin
-                </span>
               </div>
               <p className="text-[11px] text-[#736C65]">
                 Mağaza Kataloğu & Veritabanı Yönetimi
@@ -448,7 +445,7 @@ export default function AdminPanel({
 
               {formSuccess && (
                 <div className="p-4 bg-[#EBF5EE] text-[#4A7A56] rounded-2xl text-xs font-bold flex items-center gap-2 border border-[#C6E6CF] animate-fade-in">
-                  <Check size={18} /> Harika! Ürün vitrine ve veritabanına başarıyla eklendi.
+                  <Check size={18} /> Harika! Ürününüz mağazada ve vitrinde başarıyla yayınlandı, satışa açıldı! 🎉
                 </div>
               )}
 

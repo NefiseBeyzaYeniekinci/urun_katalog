@@ -5,6 +5,7 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 export default function AdminAuthModal({ onClose, onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,7 +27,7 @@ export default function AdminAuthModal({ onClose, onLoginSuccess }) {
 
         if (!dbErr && data && data.length > 0) {
           setIsLoading(false);
-          onLoginSuccess();
+          onLoginSuccess(rememberMe);
           return;
         }
       }
@@ -37,7 +38,7 @@ export default function AdminAuthModal({ onClose, onLoginSuccess }) {
         (password === '1234' || password === 'admin123')
       ) {
         setIsLoading(false);
-        onLoginSuccess();
+        onLoginSuccess(rememberMe);
         return;
       }
 
@@ -104,6 +105,19 @@ export default function AdminAuthModal({ onClose, onLoginSuccess }) {
                 className="w-full pl-10 pr-4 py-2.5 text-xs bg-[#F9F6F3] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:border-[#C05663] focus:bg-[#FFFFFF] text-[#2D2926] transition-all"
               />
             </div>
+          </div>
+
+          <div className="flex items-center justify-between pt-1">
+            <label className="flex items-center gap-2 cursor-pointer select-none text-xs text-[#736C65]">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="w-4 h-4 rounded border-[#EFE8E1] text-[#C05663] focus:ring-0 cursor-pointer accent-[#C05663]"
+              />
+              <span className="font-semibold text-[#2D2926]">Beni Hatırla</span>
+            </label>
+            <span className="text-[11px] text-[#9E938B]">Oturum açık kalsın</span>
           </div>
 
           {error && (
