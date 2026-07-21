@@ -113,20 +113,16 @@ export default function FavoritesModal({
 
         {/* Footer CTA for Bulk Order */}
         {favoriteProducts.length > 0 && (
-          <div className="p-5 border-t border-[#EFE8E1] bg-[#FAF6F0] space-y-2">
-            <button
-              onClick={handleBulkInstagramDm}
+          <div className="p-5 border-t border-[#EFE8E1] bg-[#FAF6F0]">
+            <a
+              href={`https://instagram.com/${INSTAGRAM_CONFIG.username}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn btn-instagram w-full py-3 text-xs shadow-md font-bold flex items-center justify-center gap-2"
             >
               <InstagramIcon size={16} />
-              <span>Tüm Favorilerimi Instagram DM İle Gönder ({favoriteProducts.length} Ürün)</span>
-            </button>
-
-            {copied && (
-              <div className="bg-[#4A7A56] text-white text-[11px] font-bold p-2.5 rounded-xl text-center shadow-md animate-fade-in">
-                ✨ Tüm favorileriniz kopyalandı! Instagram DM kutusuna yapıştırabilirsiniz.
-              </div>
-            )}
+              <span>Instagram DM İle İletişime Geç</span>
+            </a>
           </div>
         )}
       </div>

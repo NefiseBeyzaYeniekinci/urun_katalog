@@ -468,10 +468,10 @@ export default function AdminPanel({
                   {filteredProducts.map((p) => (
                     <div
                       key={p.id}
-                      className="p-4 bg-[#FDFBF7] rounded-2xl border border-[#EFE8E1] flex items-center justify-between gap-4 hover:border-[#D9C3B0] transition-colors"
+                      className="p-3.5 sm:p-4 bg-[#FDFBF7] rounded-2xl border border-[#EFE8E1] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 hover:border-[#D9C3B0] transition-colors overflow-hidden"
                     >
-                      <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#FFFFFF] border border-[#EFE8E1] shrink-0">
+                      <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-[#FFFFFF] border border-[#EFE8E1] shrink-0">
                           <img
                             src={Array.isArray(p.images) ? p.images[0] : p.image}
                             alt=""
@@ -481,8 +481,8 @@ export default function AdminPanel({
                             }}
                           />
                         </div>
-                        <div>
-                          <div className="flex items-center gap-2">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex flex-wrap items-center gap-1.5">
                             <span className="text-[10px] font-bold text-[#C05663] bg-[#F5EAE6] px-2 py-0.5 rounded-full">
                               {p.category || 'Örgü'}
                             </span>
@@ -492,30 +492,30 @@ export default function AdminPanel({
                               </span>
                             )}
                           </div>
-                          <h4 className="text-xs sm:text-sm font-bold text-[#2D2926] mt-1">{p.title}</h4>
+                          <h4 className="text-xs sm:text-sm font-bold text-[#2D2926] mt-1 truncate">{p.title}</h4>
                           <p className="text-xs font-extrabold text-[#C05663] mt-0.5">
                             {p.price} ₺ {p.oldPrice && <span className="text-[11px] text-[#9E938B] line-through font-normal ml-1.5">{p.oldPrice} ₺</span>}
                           </p>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-2 shrink-0">
+                      <div className="flex items-center gap-2 self-end sm:self-center shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#EFE8E1]/60 w-full sm:w-auto justify-end">
                         <button
                           onClick={() => handleStartEdit(p)}
-                          className="p-2.5 text-[#2D2926] bg-[#FFFFFF] hover:bg-[#F6F0EA] rounded-2xl border border-[#EFE8E1] transition-colors flex items-center gap-1 text-xs font-bold"
+                          className="p-2 text-[#2D2926] bg-[#FFFFFF] hover:bg-[#F6F0EA] rounded-xl border border-[#EFE8E1] transition-colors flex items-center gap-1 text-xs font-bold px-3"
                           title="Ürünü Düzenle"
                         >
-                          <Edit3 size={15} className="text-[#C05663]" />
-                          <span className="hidden sm:inline">Düzenle</span>
+                          <Edit3 size={14} className="text-[#C05663]" />
+                          <span>Düzenle</span>
                         </button>
 
                         <button
                           onClick={() => onDeleteProduct(p.id)}
-                          className="p-2.5 text-[#C05663] bg-[#FFFFFF] hover:bg-[#FDF2F4] rounded-2xl border border-[#EFE8E1] hover:border-[#F6D6DA] transition-colors flex items-center gap-1 text-xs font-bold"
+                          className="p-2 text-[#C05663] bg-[#FFFFFF] hover:bg-[#FDF2F4] rounded-xl border border-[#EFE8E1] hover:border-[#F6D6DA] transition-colors flex items-center gap-1 text-xs font-bold px-3"
                           title="Ürünü Sil"
                         >
-                          <Trash2 size={16} />
-                          <span className="hidden sm:inline">Sil</span>
+                          <Trash2 size={14} />
+                          <span>Sil</span>
                         </button>
                       </div>
                     </div>
