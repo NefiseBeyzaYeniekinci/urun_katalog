@@ -4,7 +4,7 @@ import { INSTAGRAM_CONFIG } from '../data/initialProducts';
 
 export default function HeroSection() {
   return (
-    <div className="relative overflow-hidden bg-gradient-to-b from-[#FAF6F0] via-[#FDFBF7] to-[#FBF8F5] border-b border-[#EFE8E1] py-8 sm:py-12">
+    <div className="relative overflow-hidden w-full max-w-full bg-gradient-to-b from-[#FAF6F0] via-[#FDFBF7] to-[#FBF8F5] border-b border-[#EFE8E1] py-8 sm:py-12">
       {/* Subtle Warm Background Glows */}
       <div className="absolute -top-20 -right-20 w-80 h-80 bg-[#F5EAE6] rounded-full blur-3xl opacity-70 pointer-events-none" />
       <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-[#EDE4DA] rounded-full blur-3xl opacity-60 pointer-events-none" />
@@ -15,9 +15,9 @@ export default function HeroSection() {
 
 
           {/* Heading */}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#2D2926] tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#2D2926] tracking-tight leading-tight">
             Göz At, Fiyatını Öğren, <br />
-            <span className="bg-gradient-to-r from-[#C05663] via-[#833AB4] to-[#2D2926] bg-clip-text text-transparent">
+            <span className="text-[#C05663]">
               DM'den Anında Sipariş Ver
             </span>
           </h2>

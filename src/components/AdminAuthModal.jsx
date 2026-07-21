@@ -53,7 +53,7 @@ export default function AdminAuthModal({ onClose, onLoginSuccess }) {
   return (
     <div className="modal-overlay animate-fade-in" onClick={onClose}>
       <div
-        className="bg-[#FFFFFF] w-full max-w-md rounded-3xl overflow-hidden shadow-2xl border border-[#EFE8E1] p-6 sm:p-8 relative animate-scale-in space-y-6"
+        className="bg-[#FFFFFF] w-full max-w-md max-w-[calc(100vw-32px)] rounded-3xl overflow-hidden shadow-2xl border border-[#EFE8E1] p-5 sm:p-8 relative animate-scale-in space-y-6"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close */}

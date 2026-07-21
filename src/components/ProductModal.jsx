@@ -72,7 +72,7 @@ export default function ProductModal({
   return (
     <div className="modal-overlay animate-fade-in" onClick={onClose}>
       <div
-        className="bg-[#FFFFFF] w-full max-w-5xl rounded-3xl overflow-hidden shadow-lg border border-[#EFE8E1] max-h-[92vh] flex flex-col relative animate-scale-in"
+        className="bg-[#FFFFFF] w-full max-w-5xl max-w-[calc(100vw-24px)] rounded-3xl overflow-hidden shadow-lg border border-[#EFE8E1] max-h-[92vh] flex flex-col relative animate-scale-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Modal Button */}
