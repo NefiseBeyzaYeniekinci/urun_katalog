@@ -136,14 +136,34 @@ export default function AdminPanel({
     setBadgeText('El Emeği');
   };
 
+  // Helper to parse clean prices without thousand dot or mouse scroll issues
+  const parseCleanPrice = (val) => {
+    if (!val && val !== 0) return null;
+    let str = String(val).trim();
+    if (!str) return null;
+    // If thousand dot was typed (e.g. 2.000 or 1.600)
+    if (str.includes('.') && !str.includes(',')) {
+      const parts = str.split('.');
+      if (parts.length > 1 && parts[parts.length - 1].length === 3) {
+        str = str.replace(/\./g, '');
+      }
+    }
+    str = str.replace(',', '.');
+    const num = parseFloat(str);
+    return isNaN(num) ? null : num;
+  };
+
   // Handle Adding or Updating Product
   const handleProductSubmit = (e) => {
     e.preventDefault();
     if (!title || !price || !imageUrl) return;
 
-    const parsedPrice = parseFloat(price);
-    const parsedOldPrice = oldPrice ? parseFloat(oldPrice) : null;
-    const discount = parsedOldPrice ? Math.round(((parsedOldPrice - parsedPrice) / parsedOldPrice) * 100) : null;
+    const parsedPrice = parseCleanPrice(price);
+    const parsedOldPrice = parseCleanPrice(oldPrice);
+    if (parsedPrice === null) return;
+    const discount = (parsedOldPrice && parsedOldPrice > parsedPrice)
+      ? Math.round(((parsedOldPrice - parsedPrice) / parsedOldPrice) * 100)
+      : null;
 
     if (editingProduct) {
       // Update existing product
@@ -601,11 +621,13 @@ export default function AdminPanel({
                     <div>
                       <label className="text-xs font-bold text-[#2D2926] block mb-1">Satış Fiyatı (₺) *</label>
                       <input
-                        type="number"
+                        type="text"
+                        inputMode="decimal"
                         required
-                        placeholder="480"
+                        placeholder="Örn: 2000"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
+                        onWheel={(e) => e.target.blur()}
                         className="w-full px-3.5 py-2.5 text-xs bg-[#FFFFFF] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:border-[#C05663]"
                       />
                     </div>
@@ -613,10 +635,12 @@ export default function AdminPanel({
                     <div>
                       <label className="text-xs font-bold text-[#2D2926] block mb-1">Eski Fiyat (İndirim)</label>
                       <input
-                        type="number"
-                        placeholder="590"
+                        type="text"
+                        inputMode="decimal"
+                        placeholder="Örn: 2500"
                         value={oldPrice}
                         onChange={(e) => setOldPrice(e.target.value)}
+                        onWheel={(e) => e.target.blur()}
                         className="w-full px-3.5 py-2.5 text-xs bg-[#FFFFFF] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:border-[#C05663]"
                       />
                     </div>
