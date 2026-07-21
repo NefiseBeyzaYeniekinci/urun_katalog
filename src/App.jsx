@@ -295,19 +295,35 @@ export default function App() {
     setSortBy('featured');
   };
 
+  // Helper for Turkish character normalization
+  const normalizeTR = (str) => {
+    if (!str) return '';
+    return String(str)
+      .replace(/İ/g, 'i')
+      .replace(/I/g, 'ı')
+      .replace(/Ğ/g, 'ğ')
+      .replace(/Ü/g, 'ü')
+      .replace(/Ş/g, 'ş')
+      .replace(/Ö/g, 'ö')
+      .replace(/Ç/g, 'ç')
+      .toLowerCase()
+      .trim();
+  };
+
   // Filtered & Sorted Products
   const filteredProducts = useMemo(() => {
+    const term = normalizeTR(searchTerm);
     return (products || []).filter((prod) => {
       if (!prod || !prod.title) return false;
 
-      // Search term
+      // Search term (Turkish character insensitive)
       const matchesSearch =
-        !searchTerm ||
-        prod.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (prod.description && prod.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (prod.category && prod.category.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (Array.isArray(prod.colors) && prod.colors.some(c => typeof c === 'string' && c.toLowerCase().includes(searchTerm.toLowerCase()))) ||
-        (Array.isArray(prod.sizes) && prod.sizes.some(s => typeof s === 'string' && s.toLowerCase().includes(searchTerm.toLowerCase())));
+        !term ||
+        normalizeTR(prod.title).includes(term) ||
+        normalizeTR(prod.description).includes(term) ||
+        normalizeTR(prod.category).includes(term) ||
+        (Array.isArray(prod.colors) && prod.colors.some(c => normalizeTR(c).includes(term))) ||
+        (Array.isArray(prod.sizes) && prod.sizes.some(s => normalizeTR(s).includes(term)));
 
       // Category filter
       const matchesCategory =

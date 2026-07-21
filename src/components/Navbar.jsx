@@ -77,19 +77,19 @@ export default function Navbar({
 
         {/* Central Search Bar + Filter Button (Desktop) */}
         <div className="flex-1 max-w-lg mx-2 sm:mx-4 hidden md:flex items-center gap-2">
-          <div className="relative flex-1">
-            <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9E938B]" />
+          <div className="relative flex-1 flex items-center">
+            <Search size={17} className="absolute left-3.5 inset-y-0 my-auto text-[#9E938B] pointer-events-none" />
             <input
               type="text"
               placeholder="Ürün adı, yaş grubu, ebat veya renk ara..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-10 py-2.5 text-xs bg-[#F9F6F3] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:bg-[#FFFFFF] focus:border-[#C05663] focus:ring-2 focus:ring-[#F5EAE6] transition-all text-[#2D2926] placeholder-[#9E938B]"
+              className="w-full pl-10 pr-9 py-2.5 text-xs bg-[#F9F6F3] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:bg-[#FFFFFF] focus:border-[#C05663] focus:ring-2 focus:ring-[#F5EAE6] transition-all text-[#2D2926] placeholder-[#9E938B]"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#9E938B] hover:text-[#2D2926] font-bold"
+                className="absolute right-3 inset-y-0 my-auto w-5 h-5 rounded-full bg-[#EFE8E1] text-[#736C65] hover:bg-[#C05663] hover:text-white flex items-center justify-center text-[10px] font-bold transition-colors"
               >
                 ✕
               </button>
@@ -162,19 +162,19 @@ export default function Navbar({
 
       {/* Mobile Search & Filter Row */}
       <div className="px-4 py-2.5 md:hidden bg-[#FFFFFF] border-t border-[#EFE8E1] flex items-center gap-2">
-        <div className="relative flex-1">
-          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9E938B]" />
+        <div className="relative flex-1 flex items-center">
+          <Search size={16} className="absolute left-3.5 inset-y-0 my-auto text-[#9E938B] pointer-events-none" />
           <input
             type="text"
             placeholder="Ürün veya kategori ara..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-8 py-2 text-xs bg-[#F9F6F3] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:bg-[#FFFFFF] focus:border-[#C05663] text-[#2D2926] placeholder-[#9E938B]"
+            className="w-full pl-10 pr-9 py-2 text-xs bg-[#F9F6F3] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:bg-[#FFFFFF] focus:border-[#C05663] text-[#2D2926] placeholder-[#9E938B]"
           />
           {searchTerm && (
             <button
               onClick={() => setSearchTerm('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#9E938B] hover:text-[#2D2926] font-bold"
+              className="absolute right-3 inset-y-0 my-auto w-5 h-5 rounded-full bg-[#EFE8E1] text-[#736C65] hover:bg-[#C05663] hover:text-white flex items-center justify-center text-[10px] font-bold transition-colors"
             >
               ✕
             </button>

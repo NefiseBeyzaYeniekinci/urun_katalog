@@ -421,8 +421,8 @@ export default function AdminPanel({
 
               {/* Search & Category Filter Bar */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="sm:col-span-2 relative">
-                  <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9E938B]" />
+                <div className="sm:col-span-2 relative flex items-center">
+                  <Search size={16} className="absolute left-3.5 inset-y-0 my-auto text-[#9E938B] pointer-events-none" />
                   <input
                     type="text"
                     placeholder="Ürün adı ile ara..."
