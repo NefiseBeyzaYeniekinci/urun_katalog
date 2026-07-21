@@ -24,7 +24,7 @@ export default function ProductCard({
   const primaryImage = (Array.isArray(product.images) && product.images[0]) || product.image || product.image_url || (typeof product.images === 'string' ? product.images : '');
   const imagesArray = primaryImage
     ? [primaryImage]
-    : ['https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=800&q=80'];
+    : ['https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=800&q=80'];
 
   const formattedPrice = typeof product.price === 'number'
     ? product.price.toLocaleString('tr-TR')
@@ -49,7 +49,7 @@ export default function ProductCard({
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
           onError={(e) => {
-            e.target.src = 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=800&q=80';
+            e.target.src = 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=800&q=80';
           }}
         />
 

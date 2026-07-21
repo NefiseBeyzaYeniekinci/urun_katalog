@@ -16,10 +16,10 @@ export default function ProductModal({
 
   const config = storeConfig || INSTAGRAM_CONFIG;
 
-  // Safe Array helpers
-  const images = Array.isArray(product.images) && product.images.length > 0
-    ? product.images
-    : ['https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=800&q=80'];
+  const primaryImage = (Array.isArray(product.images) && product.images[0]) || product.image || product.image_url || (typeof product.images === 'string' ? product.images : '');
+  const images = primaryImage
+    ? (Array.isArray(product.images) && product.images.length > 0 ? product.images : [primaryImage])
+    : ['https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=800&q=80'];
 
   const colors = Array.isArray(product.colors)
     ? product.colors
@@ -92,7 +92,7 @@ export default function ProductModal({
                   alt={product.title}
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=800&q=80';
+                    e.target.src = 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=800&q=80';
                   }}
                 />
                 

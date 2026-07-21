@@ -110,7 +110,7 @@ export default function App() {
       sizes: Array.isArray(dbRow.sizes) ? dbRow.sizes : [],
       dimensions: dbRow.dimensions || 'Standart Ölçü',
       description: dbRow.description || '',
-      images: mainImg ? [mainImg] : ['https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=800&q=80'],
+      images: mainImg ? [mainImg] : ['https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=800&q=80'],
       features: Array.isArray(dbRow.features) ? dbRow.features : ['Özel El Örgüsü', 'Gaziantep Atölye Üretimi', 'DM Sipariş']
     };
   };
