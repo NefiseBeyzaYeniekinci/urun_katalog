@@ -4,7 +4,7 @@ import HeroSection from './components/HeroSection';
 import CategoryFilter from './components/CategoryFilter';
 import ProductGrid from './components/ProductGrid';
 import ProductModal from './components/ProductModal';
-import AdminModal from './components/AdminModal';
+import AdminPanel from './components/AdminPanel';
 import AdminAuthModal from './components/AdminAuthModal';
 import FavoritesModal from './components/FavoritesModal';
 import Footer from './components/Footer';
@@ -246,6 +246,23 @@ export default function App() {
     return (products || []).filter((p) => p && favorites.includes(p.id));
   }, [products, favorites]);
 
+  // Full Page Admin Dashboard View
+  if (isAdminOpen) {
+    return (
+      <AdminPanel
+        onClose={() => setIsAdminOpen(false)}
+        products={products}
+        onAddProduct={handleAddProduct}
+        onDeleteProduct={handleDeleteProduct}
+        storeConfig={storeConfig}
+        onUpdateStoreConfig={setStoreConfig}
+        categories={categories}
+        onUpdateCategories={setCategories}
+        onLogoutAdmin={handleLogoutAdmin}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-[#FDFBF7] text-[#2D2926] selection:bg-[#F5EAE6] selection:text-[#C05663]">
       
@@ -311,19 +328,7 @@ export default function App() {
         />
       )}
 
-      {/* Admin Panel Modal */}
-      {isAdminOpen && (
-        <AdminModal
-          onClose={() => setIsAdminOpen(false)}
-          products={products}
-          onAddProduct={handleAddProduct}
-          onDeleteProduct={handleDeleteProduct}
-          storeConfig={storeConfig}
-          onUpdateStoreConfig={setStoreConfig}
-          categories={categories}
-          onUpdateCategories={setCategories}
-        />
-      )}
+
 
       {/* Favorites Wishlist Modal */}
       {isFavoritesOpen && (
