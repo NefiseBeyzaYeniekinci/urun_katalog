@@ -161,7 +161,9 @@ export default function AdminPanel({
     const parsedPrice = parseCleanPrice(price);
     const parsedOldPrice = parseCleanPrice(oldPrice);
     if (parsedPrice === null) return;
-    const discount = (parsedOldPrice && parsedOldPrice > parsedPrice)
+    const hasDiscount = parsedOldPrice !== null && parsedOldPrice > parsedPrice;
+    const finalOldPrice = hasDiscount ? parsedOldPrice : null;
+    const discount = hasDiscount
       ? Math.round(((parsedOldPrice - parsedPrice) / parsedOldPrice) * 100)
       : null;
 
@@ -174,13 +176,14 @@ export default function AdminPanel({
         category,
         gender,
         price: parsedPrice,
-        oldPrice: parsedOldPrice,
+        oldPrice: finalOldPrice,
         discountPercent: discount,
         badgeText: badgeText || null,
         colors: colorsText.split(',').map(s => s.trim()).filter(Boolean),
         sizes: sizesText.split(',').map(s => s.trim()).filter(Boolean),
         dimensions: dimensions || 'Standart Ölçü',
-        description: description || 'Özel el örgüsü üründür. Detaylar için Instagram DM üzerinden iletişime geçebilirsiniz.',
+        description: description || 'Özel el örgüsü üründür.',
+        image: imageUrl,
         images: [imageUrl]
       };
 
@@ -195,7 +198,7 @@ export default function AdminPanel({
         category,
         gender,
         price: parsedPrice,
-        oldPrice: parsedOldPrice,
+        oldPrice: finalOldPrice,
         discountPercent: discount,
         rating: 5.0,
         reviewCount: 1,
@@ -206,7 +209,8 @@ export default function AdminPanel({
         colors: colorsText.split(',').map(s => s.trim()).filter(Boolean),
         sizes: sizesText.split(',').map(s => s.trim()).filter(Boolean),
         dimensions: dimensions || 'Standart Ölçü',
-        description: description || 'Özel el örgüsü üründür. Detaylar için Instagram DM üzerinden iletişime geçebilirsiniz.',
+        description: description || 'Özel el örgüsü üründür.',
+        image: imageUrl,
         images: [imageUrl],
         features: ['Özel El Örgüsü', 'Gaziantep Atölye Üretimi', 'DM Sipariş']
       };

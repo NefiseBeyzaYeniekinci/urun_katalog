@@ -193,14 +193,14 @@ export default function ProductModal({
                   <span className="text-2xl md:text-3xl font-extrabold text-[#C05663] font-heading">
                     {product.price ? product.price.toLocaleString('tr-TR') : '0'} ₺
                   </span>
-                  {product.oldPrice && (
+                  {product.oldPrice && Number(product.oldPrice) > Number(product.price) && product.discountPercent != null && (
                     <span className="text-sm text-[#9E938B] line-through ml-3 font-medium">
-                      {product.oldPrice.toLocaleString('tr-TR')} ₺
+                      {typeof product.oldPrice === 'number' ? product.oldPrice.toLocaleString('tr-TR') : product.oldPrice} ₺
                     </span>
                   )}
                 </div>
 
-                {product.discountPercent && (
+                {product.oldPrice && Number(product.oldPrice) > Number(product.price) && product.discountPercent != null && (
                   <span className="bg-[#2D2926] text-[#E8B4B8] font-bold text-xs px-3 py-1 rounded-xl">
                     %{product.discountPercent} İndirim
                   </span>

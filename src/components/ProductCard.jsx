@@ -21,17 +21,19 @@ export default function ProductCard({
     ? product.sizes
     : (typeof product.sizes === 'string' ? product.sizes.split(',').map(s => s.trim()) : []);
 
-  const imagesArray = Array.isArray(product.images) && product.images.length > 0
-    ? product.images
+  const primaryImage = (Array.isArray(product.images) && product.images[0]) || product.image || product.image_url || (typeof product.images === 'string' ? product.images : '');
+  const imagesArray = primaryImage
+    ? [primaryImage]
     : ['https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=800&q=80'];
 
   const formattedPrice = typeof product.price === 'number'
     ? product.price.toLocaleString('tr-TR')
     : (product.price || '0');
 
-  const formattedOldPrice = product.oldPrice && typeof product.oldPrice === 'number'
-    ? product.oldPrice.toLocaleString('tr-TR')
-    : product.oldPrice;
+  const hasDiscount = product.oldPrice && Number(product.oldPrice) > Number(product.price) && (product.discountPercent != null);
+  const formattedOldPrice = hasDiscount
+    ? (typeof product.oldPrice === 'number' ? product.oldPrice.toLocaleString('tr-TR') : product.oldPrice)
+    : null;
 
   return (
     <div className="group bg-[#FFFFFF] rounded-2xl border border-[#EFE8E1] shadow-xs hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col justify-between hover:-translate-y-1">
