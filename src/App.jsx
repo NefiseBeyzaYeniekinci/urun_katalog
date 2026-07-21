@@ -368,15 +368,6 @@ export default function App() {
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Product Count & Sort Bar */}
-      <CategoryFilter
-        selectedGender={selectedGender}
-        setSelectedGender={setSelectedGender}
-        sortBy={sortBy}
-        setSortBy={setSortBy}
-        filteredCount={filteredProducts.length}
-      />
-
       {/* Main Catalog Grid */}
       <main className="flex-1">
         <ProductGrid

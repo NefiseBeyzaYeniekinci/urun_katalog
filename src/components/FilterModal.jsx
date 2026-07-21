@@ -51,7 +51,9 @@ export default function FilterModal({
             </div>
             <div>
               <h3 className="text-base font-extrabold text-[#2D2926]">Katalog Filtreleme</h3>
-              <p className="text-[11px] text-[#736C65]">İstediğiniz kategoriyi ve ürün sıralamasını seçin</p>
+              <p className="text-[11px] text-[#736C65]">
+                Şu anda <strong className="text-[#C05663] font-bold">{totalProductsCount}</strong> ürün listeleniyor
+              </p>
             </div>
           </div>
 
@@ -164,7 +166,7 @@ export default function FilterModal({
             onClick={handleApply}
             className="btn btn-primary flex-1 py-3 text-xs font-bold bg-[#C05663] hover:bg-[#a84753] text-white rounded-2xl shadow-md transition-all flex items-center justify-center gap-2"
           >
-            <Sparkles size={15} /> Filtreleri Uygula
+            <Sparkles size={15} /> Filtreleri Uygula ({totalProductsCount} Ürün)
           </button>
         </div>
       </div>
