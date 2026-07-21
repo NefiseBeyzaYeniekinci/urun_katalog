@@ -113,7 +113,7 @@ export default function AdminPanel({
     const discount = parsedOldPrice ? Math.round(((parsedOldPrice - parsedPrice) / parsedOldPrice) * 100) : null;
 
     const newProd = {
-      id: `prod-${Date.now()}`,
+      id: `item-${Date.now()}`,
       title,
       brand: brand || 'elisi_sevdasi',
       category,

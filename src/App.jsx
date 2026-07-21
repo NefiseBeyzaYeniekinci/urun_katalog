@@ -52,17 +52,13 @@ export default function App() {
     } catch (e) {}
   }, [categories]);
 
-  // Products State
+  // Products State (Keep all user-added products)
   const [products, setProducts] = useState(() => {
     try {
       const saved = localStorage.getItem('elisi_products_v2');
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Filter out legacy mock data IDs like prod-1, prod-2 if user wants purely real data
-        if (Array.isArray(parsed)) {
-          const nonMock = parsed.filter(p => p && p.id && !p.id.startsWith('prod-'));
-          return nonMock;
-        }
+        if (Array.isArray(parsed)) return parsed;
       }
     } catch (e) {}
     return [];
