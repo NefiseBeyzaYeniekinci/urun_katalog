@@ -2,7 +2,8 @@ import React, { useState, useMemo } from 'react';
 import {
   Plus, Trash2, Tag, Check, Sparkles, Settings, Layers, MapPin,
   Phone, MessageSquare, Clock, ShieldCheck, FolderPlus, Edit3,
-  Store, ArrowLeft, Search, PackageCheck, Database, LogOut, ExternalLink, RefreshCw
+  Store, ArrowLeft, Search, PackageCheck, Database, LogOut, ExternalLink, RefreshCw,
+  Upload, Image, FileImage, X
 } from 'lucide-react';
 import { isSupabaseConfigured } from '../lib/supabase';
 
@@ -30,11 +31,51 @@ export default function AdminPanel({
   const [oldPrice, setOldPrice] = useState('');
   const [badgeText, setBadgeText] = useState('El Emeği');
   const [imageUrl, setImageUrl] = useState('');
+  const [imageInputMode, setImageInputMode] = useState('file'); // 'file' | 'url'
   const [description, setDescription] = useState('');
   const [colorsText, setColorsText] = useState('Krem, Toz Pembe');
   const [sizesText, setSizesText] = useState('0-6 Ay, 1-2 Yaş');
   const [dimensions, setDimensions] = useState('Boy: 36 cm | Kol: 28 cm');
   const [formSuccess, setFormSuccess] = useState(false);
+
+  // File Upload & Canvas Resizer
+  const handleImageFileUpload = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new window.Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 1200;
+        const MAX_HEIGHT = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        setImageUrl(compressedDataUrl);
+      };
+      img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
 
   // New Category Input State
   const [newCatName, setNewCatName] = useState('');
@@ -472,11 +513,11 @@ export default function AdminPanel({
                   </div>
                 </div>
 
-                {/* 2. Price & Image */}
+                {/* 2. Price & Image Upload */}
                 <div className="p-4 bg-[#FDFBF7] rounded-2xl border border-[#EFE8E1] space-y-4">
-                  <h4 className="text-xs font-bold text-[#C05663] uppercase tracking-wider">2. Fiyat & Görsel Bağlantısı</h4>
+                  <h4 className="text-xs font-bold text-[#C05663] uppercase tracking-wider">2. Fiyat & Görsel Yükleme</h4>
                   
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                       <label className="text-xs font-bold text-[#2D2926] block mb-1">Satış Fiyatı (₺) *</label>
                       <input
@@ -490,7 +531,7 @@ export default function AdminPanel({
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold text-[#2D2926] block mb-1">Eski Fiyat (İndirim Gösterimi)</label>
+                      <label className="text-xs font-bold text-[#2D2926] block mb-1">Eski Fiyat (İndirim)</label>
                       <input
                         type="number"
                         placeholder="590"
@@ -499,31 +540,116 @@ export default function AdminPanel({
                         className="w-full px-3.5 py-2.5 text-xs bg-[#FFFFFF] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:border-[#C05663]"
                       />
                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-xs font-bold text-[#2D2926] block mb-1">Görsel URL Bağlantısı *</label>
-                      <input
-                        type="url"
-                        required
-                        placeholder="https://images.unsplash.com/..."
-                        value={imageUrl}
-                        onChange={(e) => setImageUrl(e.target.value)}
-                        className="w-full px-3.5 py-2.5 text-xs bg-[#FFFFFF] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:border-[#C05663]"
-                      />
-                    </div>
 
                     <div>
-                      <label className="text-xs font-bold text-[#2D2926] block mb-1">Rozet Etiketi (Örn: Çok Satan)</label>
+                      <label className="text-xs font-bold text-[#2D2926] block mb-1">Rozet Etiketi</label>
                       <input
                         type="text"
-                        placeholder="El Emeği"
+                        placeholder="Örn: Çok Satan, Yeni"
                         value={badgeText}
                         onChange={(e) => setBadgeText(e.target.value)}
                         className="w-full px-3.5 py-2.5 text-xs bg-[#FFFFFF] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:border-[#C05663]"
                       />
                     </div>
+                  </div>
+
+                  {/* Image Upload Box */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-bold text-[#2D2926] block">
+                        Ürün Görseli * {imageUrl && <span className="text-[#4A7A56] font-semibold">(Seçildi ✅)</span>}
+                      </label>
+
+                      <div className="flex items-center gap-1 bg-[#F6F0EA] p-1 rounded-xl text-[11px]">
+                        <button
+                          type="button"
+                          onClick={() => setImageInputMode('file')}
+                          className={`px-2.5 py-1 rounded-lg font-bold transition-all ${
+                            imageInputMode === 'file' ? 'bg-[#FFFFFF] text-[#C05663] shadow-xs' : 'text-[#736C65]'
+                          }`}
+                        >
+                          📁 Dosya Seç
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setImageInputMode('url')}
+                          className={`px-2.5 py-1 rounded-lg font-bold transition-all ${
+                            imageInputMode === 'url' ? 'bg-[#FFFFFF] text-[#C05663] shadow-xs' : 'text-[#736C65]'
+                          }`}
+                        >
+                          🔗 URL Gir
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* File Mode */}
+                    {imageInputMode === 'file' ? (
+                      <div>
+                        <input
+                          type="file"
+                          id="product-file-upload"
+                          accept="image/*"
+                          onChange={handleImageFileUpload}
+                          className="hidden"
+                        />
+                        
+                        {imageUrl ? (
+                          <div className="p-3 bg-[#FFFFFF] rounded-2xl border border-[#EFE8E1] flex items-center justify-between gap-4">
+                            <div className="flex items-center gap-3">
+                              <img src={imageUrl} alt="Önizleme" className="w-16 h-16 rounded-xl object-cover border border-[#EFE8E1]" />
+                              <div>
+                                <span className="text-xs font-bold text-[#2D2926] block">Ürün Görseli Hazır</span>
+                                <span className="text-[11px] text-[#736C65]">Yüklenen görsel başarıyla optimize edildi</span>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                              <label
+                                htmlFor="product-file-upload"
+                                className="btn text-xs py-1.5 px-3 bg-[#F6F0EA] text-[#2D2926] font-bold border border-[#EFE8E1] cursor-pointer hover:bg-[#EDE4DA]"
+                              >
+                                Değiştir
+                              </label>
+                              <button
+                                type="button"
+                                onClick={() => setImageUrl('')}
+                                className="p-2 text-[#C05663] hover:bg-[#FDF2F4] rounded-xl"
+                                title="Görseli Sil"
+                              >
+                                <X size={16} />
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <label
+                            htmlFor="product-file-upload"
+                            className="flex flex-col items-center justify-center p-6 bg-[#FFFFFF] border-2 border-dashed border-[#D9C3B0] rounded-2xl cursor-pointer hover:border-[#C05663] hover:bg-[#F5EAE6]/40 transition-all text-center group"
+                          >
+                            <div className="w-12 h-12 rounded-2xl bg-[#F5EAE6] text-[#C05663] flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                              <Upload size={22} />
+                            </div>
+                            <span className="text-xs font-bold text-[#2D2926]">
+                              Bilgisayarınızdan veya Telefonunuzdan Fotoğraf Seçin
+                            </span>
+                            <span className="text-[11px] text-[#736C65] mt-1">
+                              PNG, JPG, WEBP formatındaki fotoğraflar otomatik boyutlandırılır
+                            </span>
+                          </label>
+                        )}
+                      </div>
+                    ) : (
+                      /* URL Mode */
+                      <div>
+                        <input
+                          type="url"
+                          placeholder="https://images.unsplash.com/..."
+                          value={imageUrl}
+                          onChange={(e) => setImageUrl(e.target.value)}
+                          className="w-full px-3.5 py-2.5 text-xs bg-[#FFFFFF] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:border-[#C05663]"
+                        />
+                      </div>
+                    )}
+
                   </div>
                 </div>
 
