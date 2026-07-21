@@ -17,7 +17,7 @@ export default function Navbar({
   const config = storeConfig || {
     storeName: "elisi_sevdasi Store",
     username: "elisi_sevdasi",
-    announcement: "🌿 El Emeği Özel Koleksiyonlar • 📱 Instagram DM Üzerinden Anında İletişim & Şeffaf Fiyat",
+    announcement: "🌿 El Emeği Özel Koleksiyonlar",
     responseTime: "~15 Dk"
   };
 
@@ -27,17 +27,15 @@ export default function Navbar({
     <header className="sticky top-0 z-40 bg-[#FFFFFF] border-b border-[#EFE8E1] shadow-xs">
       
       {/* 1. Announcement Bar */}
-      <div className="bg-[#2D2926] text-[#FAF6F0] py-1.5 px-4 text-xs font-medium">
-        <div className="container flex items-center justify-between">
-          <div className="flex items-center gap-2">
+      <div className="bg-[#2D2926] text-[#FAF6F0] py-1.5 px-3 sm:px-4 text-[11px] sm:text-xs font-medium overflow-hidden">
+        <div className="container flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 min-w-0 shrink">
             <span className="truncate">
-              📱 Instagram DM Üzerinden Anında İletişim & Şeffaf Fiyat
+              🌿 El Emeği Örgü Koleksiyonları
             </span>
           </div>
 
-          <div className="flex items-center gap-3 text-[11px] text-[#D4C4B7]">
-            <span className="hidden md:inline">Müşteri Yanıt Süresi: {config.responseTime}</span>
-            <span className="hidden md:inline">|</span>
+          <div className="flex items-center gap-2.5 text-[11px] text-[#D4C4B7] shrink-0">
             <a
               href={`https://instagram.com/${config.username}`}
               target="_blank"
@@ -49,10 +47,10 @@ export default function Navbar({
             {!isAdminLoggedIn && (
               <button
                 onClick={onOpenAdminAuth}
-                className="opacity-30 hover:opacity-100 transition-opacity p-1 text-[#FAF6F0] ml-1"
+                className="opacity-30 hover:opacity-100 transition-opacity p-0.5 text-[#FAF6F0]"
                 title="Yönetici Girişi"
               >
-                <Lock size={13} />
+                <Lock size={12} />
               </button>
             )}
           </div>
@@ -159,6 +157,7 @@ export default function Navbar({
             )}
           </button>
         </div>
+
       </div>
 
       {/* Mobile Search & Filter Row */}
