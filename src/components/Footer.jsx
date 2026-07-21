@@ -26,14 +26,25 @@ export default function Footer({ storeConfig }) {
               🌿 El Emeği Örgü & Amigurumi Koleksiyonları • 📱 Instagram DM Üzerinden Anında İletişim & Şeffaf Fiyat
             </span>
           </div>
-          <a
-            href={`https://instagram.com/${config.username}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-instagram text-xs py-2 px-4 font-bold shrink-0"
-          >
-            <InstagramIcon size={14} /> Instagram'dan İncele
-          </a>
+          <div className="flex flex-col sm:flex-row items-center gap-2 shrink-0 w-full sm:w-auto">
+            <a
+              href={`https://instagram.com/${config.username}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-instagram text-xs py-2 px-4 font-bold w-full sm:w-auto justify-center"
+            >
+              <InstagramIcon size={14} /> Instagram'dan İncele
+            </a>
+
+            <a
+              href={`https://wa.me/${(config.whatsappNumber || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Merhaba! Kataloğunuzdaki ürünler hakkında bilgi almak istiyorum. 🌿')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn text-xs py-2 px-4 font-bold bg-[#25D366] hover:bg-[#20ba5a] text-white rounded-full shadow-sm w-full sm:w-auto justify-center transition-all flex items-center gap-1.5"
+            >
+              <MessageCircle size={15} /> WhatsApp'tan İletişime Geç
+            </a>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-[#4A4540]">
