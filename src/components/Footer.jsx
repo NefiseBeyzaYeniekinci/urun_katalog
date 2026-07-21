@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle, MapPin, Clock, Truck, Send } from 'lucide-react';
+import { MessageCircle, MapPin, Clock, Truck, Send, Sparkles } from 'lucide-react';
 import InstagramIcon from './icons/InstagramIcon';
 
 export default function Footer({ storeConfig }) {
@@ -8,6 +8,7 @@ export default function Footer({ storeConfig }) {
     username: "elisi_sevdasi",
     location: "Gaziantep, Türkiye",
     whatsappNumber: "+905551234567",
+    announcement: "🌿 El Emeği Örgü & Amigurumi Koleksiyonları • 📱 Instagram DM Üzerinden Anında İletişim & Şeffaf Fiyat",
     responseTime: "~15 Dk",
     workingHours: "09:00 - 23:00",
     shippingTime: "1-3 İş Günü İçinde Teslimat"
@@ -15,14 +16,32 @@ export default function Footer({ storeConfig }) {
 
   return (
     <footer className="bg-[#2D2926] text-[#FAF6F0] pt-12 pb-8 border-t border-[#4A4540]">
-      <div className="container space-y-8">
+      <div className="container space-y-8 px-4 sm:px-6">
         
+        {/* Top Banner inside Footer */}
+        <div className="bg-[#3D3834] p-4 rounded-2xl border border-[#4A4540] flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <div className="flex items-center gap-2">
+            <Sparkles size={18} className="text-[#E8B4B8] shrink-0" />
+            <span className="text-xs sm:text-sm font-semibold text-[#FAF6F0]">
+              🌿 El Emeği Örgü & Amigurumi Koleksiyonları • 📱 Instagram DM Üzerinden Anında İletişim & Şeffaf Fiyat
+            </span>
+          </div>
+          <a
+            href={`https://instagram.com/${config.username}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-instagram text-xs py-2 px-4 font-bold shrink-0"
+          >
+            <InstagramIcon size={14} /> Instagram'dan İncele
+          </a>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-[#4A4540]">
           
           {/* Brand Col */}
           <div className="space-y-3">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl overflow-hidden shadow-xs border border-[#4A4540] bg-[#FFFFFF]">
+              <div className="w-10 h-10 rounded-2xl overflow-hidden shadow-xs border border-[#4A4540] bg-[#FFFFFF] shrink-0">
                 <img src="/logo.png" alt="elisi_sevdasi logo" className="w-full h-full object-cover" />
               </div>
               <h3 className="text-xl font-bold font-heading text-[#FFFFFF] flex items-center gap-2">

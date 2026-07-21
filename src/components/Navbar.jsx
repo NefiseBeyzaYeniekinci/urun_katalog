@@ -30,9 +30,8 @@ export default function Navbar({
       <div className="bg-[#2D2926] text-[#FAF6F0] py-1.5 px-4 text-xs font-medium">
         <div className="container flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#E8B4B8] animate-pulse" />
             <span className="truncate">
-              {config.announcement}
+              📱 Instagram DM Üzerinden Anında İletişim & Şeffaf Fiyat
             </span>
           </div>
 

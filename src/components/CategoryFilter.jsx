@@ -49,7 +49,6 @@ export default function CategoryFilter({
           <div className="flex items-center justify-between md:justify-end w-full md:w-auto gap-4 text-xs pt-2 md:pt-0 border-t md:border-t-0 border-[#F6F0EA] px-1">
             
             <div className="text-[#736C65] font-medium flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#4A7A56]" />
               <span>Toplu Gösterim: <strong className="text-[#2D2926] font-bold">{filteredCount}</strong> Örgü Ürünü</span>
             </div>
 

@@ -108,7 +108,7 @@ export default function App() {
         if (Array.isArray(parsed)) return parsed;
       }
     } catch (e) {}
-    return ['prod-1', 'prod-2', 'prod-4'];
+    return [];
   });
 
   useEffect(() => {

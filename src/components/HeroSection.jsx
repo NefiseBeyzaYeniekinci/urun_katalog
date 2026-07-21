@@ -12,11 +12,7 @@ export default function HeroSection() {
       <div className="container relative z-10">
         <div className="max-w-3xl mx-auto text-center space-y-4">
           
-          {/* Trust Seal Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFFFFF] border border-[#EFE8E1] shadow-xs text-xs font-semibold text-[#5A5450]">
-            <Sparkles size={14} className="text-[#C05663]" />
-            <span>Sevgiyle Dokunan El Örgüsü & Amigurumi Mağazası</span>
-          </div>
+
 
           {/* Heading */}
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#2D2926] tracking-tight leading-tight">
