@@ -300,11 +300,18 @@ export default function ProductModal({
                   href={getInstagramUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={handleCopyMessage}
                   className="btn btn-instagram w-full py-3.5 text-sm shadow-md font-bold flex items-center justify-center gap-2"
                 >
                   <InstagramIcon size={18} />
                   <span>Instagram DM İle Sipariş Ver</span>
                 </a>
+
+                {copied && (
+                  <div className="bg-[#4A7A56] text-white text-xs font-bold p-3 rounded-2xl text-center shadow-md animate-fade-in flex items-center justify-center gap-1.5">
+                    <span>✨ Ürün bilgileri kopyalandı! Instagram DM kutusuna yapıştırabilirsiniz.</span>
+                  </div>
+                )}
               </div>
 
             </div>

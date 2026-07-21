@@ -9,6 +9,28 @@ export default function FavoritesModal({
   onToggleFavorite,
   onSelectProduct
 }) {
+  const [copied, setCopied] = React.useState(false);
+
+  const handleBulkInstagramDm = () => {
+    if (!favoriteProducts || favoriteProducts.length === 0) return;
+
+    const itemsText = favoriteProducts
+      .map((p, idx) => `${idx + 1}. ${p.title} (#${p.id}) - ${p.price} TL`)
+      .join('\n');
+
+    const totalPrice = favoriteProducts.reduce((sum, p) => sum + (Number(p.price) || 0), 0);
+
+    const message = `Merhaba @${INSTAGRAM_CONFIG.username}! Beğendiğim favori ürünleriniz için stok ve sipariş bilgisi almak istiyorum:\n\n${itemsText}\n\n• Toplam Tutarlı Liste (${favoriteProducts.length} Ürün): ~${totalPrice} TL\n\nSipariş oluşturmak için yardımcı olabilir misiniz? 🌿`;
+
+    try {
+      navigator.clipboard.writeText(message);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    } catch (e) {}
+
+    window.open(`https://instagram.com/${INSTAGRAM_CONFIG.username}`, '_blank');
+  };
+
   return (
     <div className="modal-overlay animate-fade-in" onClick={onClose}>
       <div
@@ -89,6 +111,24 @@ export default function FavoritesModal({
           )}
         </div>
 
+        {/* Footer CTA for Bulk Order */}
+        {favoriteProducts.length > 0 && (
+          <div className="p-5 border-t border-[#EFE8E1] bg-[#FAF6F0] space-y-2">
+            <button
+              onClick={handleBulkInstagramDm}
+              className="btn btn-instagram w-full py-3 text-xs shadow-md font-bold flex items-center justify-center gap-2"
+            >
+              <InstagramIcon size={16} />
+              <span>Tüm Favorilerimi Instagram DM İle Gönder ({favoriteProducts.length} Ürün)</span>
+            </button>
+
+            {copied && (
+              <div className="bg-[#4A7A56] text-white text-[11px] font-bold p-2.5 rounded-xl text-center shadow-md animate-fade-in">
+                ✨ Tüm favorileriniz kopyalandı! Instagram DM kutusuna yapıştırabilirsiniz.
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

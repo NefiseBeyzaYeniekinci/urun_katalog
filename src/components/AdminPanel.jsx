@@ -663,101 +663,63 @@ export default function AdminPanel({
 
                   {/* Image Upload Box */}
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <label className="text-xs font-bold text-[#2D2926] block">
-                        Ürün Görseli * {imageUrl && <span className="text-[#4A7A56] font-semibold">(Seçildi ✅)</span>}
-                      </label>
+                    <label className="text-xs font-bold text-[#2D2926] block">
+                      Ürün Görseli * {imageUrl && <span className="text-[#4A7A56] font-semibold">(Görsel Seçildi ✅)</span>}
+                    </label>
 
-                      <div className="flex items-center gap-1 bg-[#F6F0EA] p-1 rounded-xl text-[11px]">
-                        <button
-                          type="button"
-                          onClick={() => setImageInputMode('file')}
-                          className={`px-2.5 py-1 rounded-lg font-bold transition-all ${
-                            imageInputMode === 'file' ? 'bg-[#FFFFFF] text-[#C05663] shadow-xs' : 'text-[#736C65]'
-                          }`}
-                        >
-                          📁 Dosya Seç
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setImageInputMode('url')}
-                          className={`px-2.5 py-1 rounded-lg font-bold transition-all ${
-                            imageInputMode === 'url' ? 'bg-[#FFFFFF] text-[#C05663] shadow-xs' : 'text-[#736C65]'
-                          }`}
-                        >
-                          🔗 URL Gir
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* File Mode */}
-                    {imageInputMode === 'file' ? (
-                      <div>
-                        <input
-                          type="file"
-                          id="product-file-upload"
-                          accept="image/*"
-                          onChange={handleImageFileUpload}
-                          className="hidden"
-                        />
-                        
-                        {imageUrl ? (
-                          <div className="p-3 bg-[#FFFFFF] rounded-2xl border border-[#EFE8E1] flex items-center justify-between gap-4">
-                            <div className="flex items-center gap-3">
-                              <img src={imageUrl} alt="Önizleme" className="w-16 h-16 rounded-xl object-cover border border-[#EFE8E1]" />
-                              <div>
-                                <span className="text-xs font-bold text-[#2D2926] block">Ürün Görseli Hazır</span>
-                                <span className="text-[11px] text-[#736C65]">Yüklenen görsel başarıyla optimize edildi</span>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                              <label
-                                htmlFor="product-file-upload"
-                                className="btn text-xs py-1.5 px-3 bg-[#F6F0EA] text-[#2D2926] font-bold border border-[#EFE8E1] cursor-pointer hover:bg-[#EDE4DA]"
-                              >
-                                Değiştir
-                              </label>
-                              <button
-                                type="button"
-                                onClick={() => setImageUrl('')}
-                                className="p-2 text-[#C05663] hover:bg-[#FDF2F4] rounded-xl"
-                                title="Görseli Sil"
-                              >
-                                <X size={16} />
-                              </button>
+                    <div>
+                      <input
+                        type="file"
+                        id="product-file-upload"
+                        accept="image/*"
+                        onChange={handleImageFileUpload}
+                        className="hidden"
+                      />
+                      
+                      {imageUrl ? (
+                        <div className="p-3 bg-[#FFFFFF] rounded-2xl border border-[#EFE8E1] flex items-center justify-between gap-4">
+                          <div className="flex items-center gap-3">
+                            <img src={imageUrl} alt="Önizleme" className="w-16 h-16 rounded-xl object-cover border border-[#EFE8E1]" />
+                            <div>
+                              <span className="text-xs font-bold text-[#2D2926] block">Ürün Görseli Yüklendi</span>
+                              <span className="text-[11px] text-[#736C65]">Görsel başarıyla optimize edildi</span>
                             </div>
                           </div>
-                        ) : (
-                          <label
-                            htmlFor="product-file-upload"
-                            className="flex flex-col items-center justify-center p-6 bg-[#FFFFFF] border-2 border-dashed border-[#D9C3B0] rounded-2xl cursor-pointer hover:border-[#C05663] hover:bg-[#F5EAE6]/40 transition-all text-center group"
-                          >
-                            <div className="w-12 h-12 rounded-2xl bg-[#F5EAE6] text-[#C05663] flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                              <Upload size={22} />
-                            </div>
-                            <span className="text-xs font-bold text-[#2D2926]">
-                              Bilgisayarınızdan veya Telefonunuzdan Fotoğraf Seçin
-                            </span>
-                            <span className="text-[11px] text-[#736C65] mt-1">
-                              PNG, JPG, WEBP formatındaki fotoğraflar otomatik boyutlandırılır
-                            </span>
-                          </label>
-                        )}
-                      </div>
-                    ) : (
-                      /* URL Mode */
-                      <div>
-                        <input
-                          type="url"
-                          placeholder="https://images.unsplash.com/..."
-                          value={imageUrl}
-                          onChange={(e) => setImageUrl(e.target.value)}
-                          className="w-full px-3.5 py-2.5 text-xs bg-[#FFFFFF] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:border-[#C05663]"
-                        />
-                      </div>
-                    )}
 
+                          <div className="flex items-center gap-2">
+                            <label
+                              htmlFor="product-file-upload"
+                              className="btn text-xs py-1.5 px-3 bg-[#F6F0EA] text-[#2D2926] font-bold border border-[#EFE8E1] cursor-pointer hover:bg-[#EDE4DA]"
+                            >
+                              Değiştir
+                            </label>
+                            <button
+                              type="button"
+                              onClick={() => setImageUrl('')}
+                              className="p-2 text-[#C05663] hover:bg-[#FDF2F4] rounded-xl"
+                              title="Görseli Sil"
+                            >
+                              <X size={16} />
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <label
+                          htmlFor="product-file-upload"
+                          className="flex flex-col items-center justify-center p-6 bg-[#FFFFFF] border-2 border-dashed border-[#D9C3B0] rounded-2xl cursor-pointer hover:border-[#C05663] hover:bg-[#F5EAE6]/40 transition-all text-center group"
+                        >
+                          <div className="w-12 h-12 rounded-2xl bg-[#F5EAE6] text-[#C05663] flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                            <Upload size={22} />
+                          </div>
+                          <span className="text-xs font-bold text-[#2D2926]">
+                            Bilgisayarınızdan veya Telefonunuzdan Fotoğraf Seçin
+                          </span>
+                          <span className="text-[11px] text-[#736C65] mt-1">
+                            PNG, JPG, WEBP formatındaki fotoğraflar otomatik optimize edilir
+                          </span>
+                        </label>
+                      )}
+                    </div>
                   </div>
                 </div>
 
