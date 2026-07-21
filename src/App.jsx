@@ -99,10 +99,12 @@ export default function App() {
   }, [products]);
 
 
-  // Favorites State
+  // Favorites State (Clean legacy mock IDs)
   const [favorites, setFavorites] = useState(() => {
     try {
-      const saved = localStorage.getItem('elisi_favorites_v2');
+      localStorage.removeItem('elisi_favorites');
+      localStorage.removeItem('elisi_favorites_v2');
+      const saved = localStorage.getItem('elisi_favorites_v3');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) return parsed;
@@ -113,7 +115,7 @@ export default function App() {
 
   useEffect(() => {
     try {
-      localStorage.setItem('elisi_favorites_v2', JSON.stringify(favorites));
+      localStorage.setItem('elisi_favorites_v3', JSON.stringify(favorites));
     } catch (e) {}
   }, [favorites]);
 
@@ -270,7 +272,7 @@ export default function App() {
       <Navbar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-        favoritesCount={favorites.length}
+        favoritesCount={favoriteProducts.length}
         onOpenFavorites={() => setIsFavoritesOpen(true)}
         onOpenAdminAuth={handleOpenAdminTrigger}
         isAdminLoggedIn={isAdminLoggedIn}
