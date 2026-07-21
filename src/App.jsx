@@ -4,6 +4,7 @@ import HeroSection from './components/HeroSection';
 import CategoryFilter from './components/CategoryFilter';
 import ProductGrid from './components/ProductGrid';
 import ProductModal from './components/ProductModal';
+import FilterModal from './components/FilterModal';
 import AdminPanel from './components/AdminPanel';
 import AdminAuthModal from './components/AdminAuthModal';
 import FavoritesModal from './components/FavoritesModal';
@@ -12,6 +13,7 @@ import { INITIAL_PRODUCTS, INITIAL_CONFIG, INITIAL_CATEGORIES } from './data/ini
 import { supabase, isSupabaseConfigured } from './lib/supabase';
 
 export default function App() {
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   // Store Config State (Loaded safely from LocalStorage or INITIAL_CONFIG)
   const [storeConfig, setStoreConfig] = useState(() => {
     try {
@@ -358,7 +360,7 @@ export default function App() {
         isAdminLoggedIn={isAdminLoggedIn}
         onLogoutAdmin={handleLogoutAdmin}
         activeCategory={activeCategory}
-        setActiveCategory={setActiveCategory}
+        onOpenFilterModal={() => setIsFilterModalOpen(true)}
         storeConfig={storeConfig}
         categories={categories}
       />
@@ -366,7 +368,7 @@ export default function App() {
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Audience Filter Pills & Sorting */}
+      {/* Product Count & Sort Bar */}
       <CategoryFilter
         selectedGender={selectedGender}
         setSelectedGender={setSelectedGender}
@@ -389,6 +391,20 @@ export default function App() {
       {/* Footer */}
       <Footer storeConfig={storeConfig} />
 
+      {/* Popup Filter Drawer / Modal */}
+      <FilterModal
+        isOpen={isFilterModalOpen}
+        onClose={() => setIsFilterModalOpen(false)}
+        categories={categories}
+        activeCategory={activeCategory}
+        setActiveCategory={setActiveCategory}
+        selectedGender={selectedGender}
+        setSelectedGender={setSelectedGender}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        totalProductsCount={filteredProducts.length}
+      />
+
       {/* Product Detail Modal */}
       {selectedProduct && (
         <ProductModal
@@ -409,8 +425,6 @@ export default function App() {
           onLoginSuccess={handleAdminLoginSuccess}
         />
       )}
-
-
 
       {/* Favorites Wishlist Modal */}
       {isFavoritesOpen && (
