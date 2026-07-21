@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+:root {
+  /* Color Palette: Cream, Powder Pink (Dusty Rose), White, Warm Sand & Muted Charcoal */
+  --bg-main: #FBF8F5;
+  --bg-surface: #FFFFFF;
+  --bg-cream-soft: #F6F0EA;
+  --bg-cream-accent: #EDE4DA;
+  
+  /* Accent Colors */
+  --rose-soft: #F5EAE6;
+  --rose-blush: #E8B4B8;
+  --rose-accent: #D88E96;
+  --sand-accent: #D9C3B0;
+  
+  /* Gender Neutral Contrast Accents */
+  --charcoal-main: #2D2926;
+  --charcoal-soft: #4A4540;
+  --slate-muted: #736C65;
+  --border-light: #EFE8E1;
+
+  /* Fonts */
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-main);
+  color: var(--charcoal-main);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+/* Custom Utilities */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: #2D2926;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(45, 41, 38, 0.04);
+}
+
+.btn-primary:hover {
+  background: #4A4540;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(45, 41, 38, 0.1);
+}
+
+.btn-instagram {
+  background: linear-gradient(135deg, #833AB4, #FD1D1D, #F56040);
+  color: #FFFFFF;
+  box-shadow: 0 4px 15px rgba(225, 48, 108, 0.25);
+}
+
+.btn-instagram:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(225, 48, 108, 0.35);
+  filter: brightness(1.05);
+}
+
+.btn-soft-rose {
+  background: #F5EAE6;
+  color: #2D2926;
+  border: 1px solid #EFE8E1;
+}
+
+.btn-soft-rose:hover {
+  background: #E8B4B8;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: #FFFFFF;
+  color: #2D2926;
+  border: 1px solid #EFE8E1;
+}
+
+.btn-outline:hover {
+  background: #F6F0EA;
+  border-color: #D9C3B0;
+}
+
+/* Badge Styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(45, 41, 38, 0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+/* Hide scrollbar for category scroll */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
