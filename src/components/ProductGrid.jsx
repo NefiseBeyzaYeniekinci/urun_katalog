@@ -32,8 +32,8 @@ export default function ProductGrid({
   }
 
   return (
-    <div className="container py-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div className="container py-6 sm:py-8">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
         {products.map((prod) => (
           <ProductCard
             key={prod.id}
