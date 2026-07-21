@@ -109,14 +109,7 @@ export default function ProductCard({
             {product.title}
           </h3>
 
-          {/* Rating Stars */}
-          <div className="flex items-center gap-1.5 mt-1 text-[11px] text-[#736C65]">
-            <div className="flex items-center text-[#E6A100]">
-              <Star size={12} fill="#E6A100" />
-              <span className="font-bold text-[#2D2926] ml-1">{product.rating || '5.0'}</span>
-            </div>
-            <span>({product.reviewCount || 42} Değerlendirme)</span>
-          </div>
+
 
           {/* Age / Size / Specs Tags preview */}
           <div className="flex flex-wrap gap-1 mt-2">

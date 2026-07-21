@@ -167,15 +167,8 @@ export default function ProductModal({
                 </h1>
 
                 {/* Rating Stars */}
-                <div className="flex items-center gap-2 mt-2 text-xs">
-                  <div className="flex items-center text-[#E6A100] font-bold">
-                    <Star size={14} fill="#E6A100" />
-                    <span className="ml-1 text-[#2D2926]">{product.rating || '5.0'}</span>
-                  </div>
-                  <span className="text-[#9E938B]">|</span>
-                  <span className="text-[#736C65] font-medium">{product.reviewCount || 42} Değerlendirme</span>
-                  <span className="text-[#9E938B]">|</span>
-                  <span className="text-[#4A7A56] font-bold bg-[#EBF5EE] px-2 py-0.5 rounded-full text-[11px]">
+                <div className="mt-2">
+                  <span className="text-[#4A7A56] font-bold bg-[#EBF5EE] px-2.5 py-1 rounded-full text-[11px]">
                     ✓ Stokta Var
                   </span>
                 </div>

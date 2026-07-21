@@ -124,7 +124,12 @@ export default function App() {
         const { data: dbProducts, error: prodErr } = await supabase.from('products').select('*');
         if (!prodErr && dbProducts && dbProducts.length > 0) {
           const formatted = dbProducts.map(mapSupabaseToProduct);
-          setProducts(formatted);
+          setProducts((prevLocal) => {
+            const map = new Map();
+            formatted.forEach(p => map.set(p.id, p));
+            prevLocal.forEach(p => map.set(p.id, p));
+            return Array.from(map.values());
+          });
         }
 
         const { data: dbCats, error: catErr } = await supabase.from('categories').select('name');
