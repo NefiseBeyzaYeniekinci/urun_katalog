@@ -496,17 +496,6 @@ export default function AdminModal({
                       className="w-full px-3.5 py-2.5 text-xs bg-[#F9F6F3] border border-[#EFE8E1] rounded-xl focus:outline-none focus:border-[#C05663]"
                     />
                   </div>
-
-                  <div>
-                    <label className="text-xs font-bold text-[#2D2926] block mb-1">WhatsApp Numarası</label>
-                    <input
-                      type="text"
-                      required
-                      value={configForm.whatsappNumber}
-                      onChange={(e) => setConfigForm({ ...configForm, whatsappNumber: e.target.value })}
-                      className="w-full px-3.5 py-2.5 text-xs bg-[#F9F6F3] border border-[#EFE8E1] rounded-xl focus:outline-none focus:border-[#C05663]"
-                    />
-                  </div>
                 </div>
 
                 <div>

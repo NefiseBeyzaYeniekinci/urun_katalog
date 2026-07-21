@@ -57,12 +57,6 @@ export default function ProductModal({
     return `https://instagram.com/${config.username}`;
   };
 
-  const getWhatsAppUrl = () => {
-    const text = encodeURIComponent(dmMessageText);
-    const cleanNumber = (config.whatsappNumber || '+905551234567').replace(/[^0-9]/g, '');
-    return `https://wa.me/${cleanNumber}?text=${text}`;
-  };
-
   const handleCopyMessage = () => {
     navigator.clipboard.writeText(dmMessageText);
     setCopied(true);
@@ -317,16 +311,6 @@ export default function ProductModal({
                 >
                   <InstagramIcon size={18} />
                   <span>Instagram DM İle Sipariş Ver</span>
-                </a>
-
-                <a
-                  href={getWhatsAppUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn w-full py-2.5 text-xs bg-[#25D366] text-white hover:bg-[#20bd5a] font-bold flex items-center justify-center gap-2 shadow-xs"
-                >
-                  <MessageCircle size={16} />
-                  <span>WhatsApp Sipariş Hattı</span>
                 </a>
               </div>
 

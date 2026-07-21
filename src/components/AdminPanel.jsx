@@ -934,17 +934,6 @@ export default function AdminPanel({
                         className="w-full px-3.5 py-2.5 text-xs bg-[#FFFFFF] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:border-[#C05663]"
                       />
                     </div>
-
-                    <div>
-                      <label className="text-xs font-bold text-[#2D2926] block mb-1">WhatsApp Numarası</label>
-                      <input
-                        type="text"
-                        required
-                        value={configForm.whatsappNumber}
-                        onChange={(e) => setConfigForm({ ...configForm, whatsappNumber: e.target.value })}
-                        className="w-full px-3.5 py-2.5 text-xs bg-[#FFFFFF] border border-[#EFE8E1] rounded-2xl focus:outline-none focus:border-[#C05663]"
-                      />
-                    </div>
                   </div>
 
                   <div>
